@@ -1,6 +1,9 @@
 package br.com.tiago.schermack.projeto_teste_automatizado.service.impl;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
@@ -73,6 +76,36 @@ save(any(Employee.class));
         assertEquals("Wellinton", responseDTO.firstName());
         assertEquals("Wellinton.braz29@gmail.com", responseDTO.email());
 
-        
+    }
+    @Test
+    @DisplayName("Deve deletar um funcionário existente e retornar sucesso")
+    public void shouldDeleteEmployee() {
+
+        Long id = 1L;
+
+        Employee existingEmployee = new Employee("Wellinton", "wellinton@email.com");
+        existingEmployee.setId(id);
+
+        when(employeeRepository.findById(id))
+                .thenReturn(Optional.of(existingEmployee));
+
+        employeeService.delete(id);
+
+        verify(employeeRepository, times(1)).delete(existingEmployee);
+    }
+@Test
+@DisplayName("update Deve lançar quando o funcionário não existir")
+public void shouldThrowEntityNotFoundExceptionWhenUpdatingNonExistingEmployee() {
+
+    Long id = 1L;
+
+    EmployeeRequestDTO requestDTO =
+            new EmployeeRequestDTO("Wellinton", "wellinton@email.com");
+
+    when(employeeRepository.findById(id))
+            .thenReturn(Optional.empty());
+
+    assertThrows(jakarta.persistence.EntityNotFoundException.class,
+            () -> employeeService.update(id, requestDTO));
     }
 }
