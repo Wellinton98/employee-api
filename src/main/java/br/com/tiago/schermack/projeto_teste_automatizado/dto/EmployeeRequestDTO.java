@@ -10,4 +10,9 @@ public record EmployeeRequestDTO(
     @NotBlank(message = "O e-mail é obrigatório") 
     @Email(message = "O e-mail é inválido") 
     String email
-) {}
+) {
+
+    public Object toEntity() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'toEntity'");
+    }}

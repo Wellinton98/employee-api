@@ -83,7 +83,7 @@ save(any(Employee.class));
 
         Long id = 1L;
 
-        Employee existingEmployee = new Employee("Wellinton", "wellinton@email.com");
+        Employee existingEmployee = new Employee("Wellinton", "Wellinton.braz29@gmail.com");
         existingEmployee.setId(id);
 
         when(employeeRepository.findById(id))
@@ -100,7 +100,7 @@ public void shouldThrowEntityNotFoundExceptionWhenUpdatingNonExistingEmployee() 
     Long id = 1L;
 
     EmployeeRequestDTO requestDTO =
-            new EmployeeRequestDTO("Wellinton", "wellinton@email.com");
+            new EmployeeRequestDTO("Wellinton", "Wellinton.braz29@gmail.com");
 
     when(employeeRepository.findById(id))
             .thenReturn(Optional.empty());
